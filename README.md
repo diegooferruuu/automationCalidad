@@ -23,10 +23,9 @@ Durante el proceso de testing exploratorio, se identificaron los siguientes mód
 
 ## Tecnologías y Herramientas  
 - **Pruebas Exploratorias**: Exploratory Testing Chrome Extension.
-- **(Opcional) Pruebas Automatizadas**:  
-  - Lenguaje sugerido: Ruby o JavaScript  
-  - Frameworks recomendados: Gherkin, Cucumber, Capybara o Cypress  
-- **Gestión y colaboración**: GitHub, Trello
+- **Pruebas Automatizadas**:  
+  - Lenguaje : Ruby 
+  - Frameworks recomendados: Gherkin, Cucumber, Capybara   
 
 ## Comandos de Ejecución  
 > En caso de que se incorporen pruebas automatizadas con Cucumber:

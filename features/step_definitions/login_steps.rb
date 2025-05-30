@@ -3,8 +3,8 @@ Given('que estoy en la página de login') do
     visit('/')
 end
 
-Given('ingreso el usuario {string} y la contraseña {string}') do |user, password|
-    fill_in 'user-name', :with => user
+Given('ingreso el usuario {string} y la contraseña {string}') do |username, password|
+    fill_in 'user-name', :with => username
     fill_in 'password', :with => password
 end
 
@@ -23,8 +23,8 @@ Then('debería ver el título {string}') do |expected_title|
     end
 end
 
-Given('ingreso el usuario {string} y una contraseña incorrecta {string}') do |user,passwordFail|
-    fill_in 'user-name', :with => user
+Given('ingreso el usuario {string} y una contraseña incorrecta {string}') do |username,passwordFail|
+    fill_in 'user-name', :with => username
     fill_in 'password', :with => passwordFail
 end
 

@@ -1,37 +1,43 @@
-Given('que estoy en la página de login') do
-    page.driver.browser.manage.window.maximize
-    visit('/')
+require_relative '../pages/login_page'
+
+login = LoginPage.new
+
+
+Given('I am on the login page') do
+    login.visit_login_page
 end
 
-Given('ingreso el usuario {string} y la contraseña {string}') do |username, password|
-    fill_in 'user-name', :with => username
-    fill_in 'password', :with => password
+Given('I enter username {string} and password {string}') do |username, password|
+    login.enter_credentials(username, password)
 end
 
-When('hago clic en el botón Login') do
-    click_button("login-button") 
+When('I click the Login button') do
+    login.click_login_button
 end
 
-Then('debería ser redirigido a la página de productos') do
-    expect(page).to have_selector('#header_container > div.header_secondary_container > span', text: 'Products')
+Then('I should be redirected to the products page') do
+    expect(login.expected_title_displayed?('Products')).to be true
 end
 
-Then('debería ver el título {string}') do |expected_title|
-    actual_title = find(:css,'#header_container > div.header_secondary_container > span').text 
+Then('I should see the title {string}') do |expected_title|
+    actual_title = login.get_page_title
     if actual_title == expected_title
-        puts "El título es correcto: #{actual_title}"
+        puts "The title is correct: #{actual_title}"
+    else
+        raise "Title mismatch. Expected: #{expected_title}, Actual: #{actual_title}"
     end
 end
 
-Given('ingreso el usuario {string} y una contraseña incorrecta {string}') do |username,passwordFail|
-    fill_in 'user-name', :with => username
-    fill_in 'password', :with => passwordFail
+Given('I enter username {string} and incorrect password {string}') do |username,failed_password|
+    login.enter_credentials(username, failed_password)
 end
 
-Then('debería ver un mensaje de error que diga {string}') do |errorMessage|
-    error = find(:css, '#login_button_container > div > form > div.error-message-container.error > h3').text
-    if error == errorMessage
-        puts "El mensaje de error es correcto: #{error}"
+Then('I should see an error message saying {string}') do |expected_error|
+    actual_error = login.get_error_message
+    if actual_error == expected_error
+        puts "The error message is correct: #{actual_error}"
+    else
+        raise "Unexpected error message. Expected: '#{expected_error}', Actual: '#{actual_error}'"
     end
 end
 

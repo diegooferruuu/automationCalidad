@@ -5,12 +5,13 @@ Feature: Empty cart
 
   Background:
     Given I am logged in as "standard_user" with password "secret_sauce"
-
+    
+  @cart
   Scenario: Remove all items from the cart
     When I add the following products to the cart:
       | Sauce Labs Backpack     |
       | Sauce Labs Bike Light   |
     And I go to the cart
-    And I remove "Sauce Labs Backpack" from the cart
-    And I remove "Sauce Labs Bike Light" from the cart
+    And I remove "sauce labs backpack" from the cart
+    And I remove "sauce labs bike light" from the cart
     Then the cart should be empty

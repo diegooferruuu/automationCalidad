@@ -5,7 +5,7 @@ Feature: Cart persistence
 
   Background:
     Given I am logged in as "standard_user" with password "secret_sauce"
-
+  @cart
   Scenario: Cart retains items after visiting another page
     When I add "Sauce Labs Backpack" to the cart
     And I go to the cart

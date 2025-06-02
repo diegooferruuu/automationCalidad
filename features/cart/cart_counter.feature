@@ -5,7 +5,7 @@ Feature: Cart counter
 
   Background:
     Given I am logged in as "standard_user" with password "secret_sauce"
-
+  @cart
   Scenario: Add multiple products and verify cart counter
     When I add the following products to the cart:
       | Sauce Labs Backpack     |

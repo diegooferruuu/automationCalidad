@@ -1,26 +1,21 @@
-When('hago clic en el botón del menú de opciones de ordenamiento') do
-    find('#header_container > div.header_secondary_container > div > span > select').click
+require_relative '../pages/filter_page'
+
+filter_page = FilterPage.new
+
+When('I click the sorting options menu button') do
+    filter_page.open_sorting_menu
 end
 
-When('selecciono {string} en el filtro de ordenamiento') do |string|
-    option = find('#header_container > div.header_secondary_container > div > span > select').find(:option, string)
-    option.select_option
+When('I select {string} from the sorting filter') do |option_text|
+    filter_page.select_sorting_option(option_text)
 end
 
-Then('el primer producto mostrado debería ser {string}') do |expected_product|
-    first_product = all('.inventory_item_name').first.text
-    if first_product == expected_product
-        puts "El primer producto es correcto: #{first_product}"
-    else
-        raise "El primer producto no es correcto. Se esperaba: #{expected_product}, pero se encontró: #{first_product}"
-    end
+Then('the first displayed product should be {string}') do |expected_product|
+    actual_product = filter_page.get_first_product_name
+    raise "Expected first product: #{expected_product}, but got: #{actual_product}" unless actual_product == expected_product
 end
 
-Then('el último producto mostrado debería ser {string}') do |expected_product|
-    last_product = all('.inventory_item_name').last.text
-    if last_product == expected_product
-        puts "El último producto es correcto: #{last_product}"
-    else
-        raise "El último producto no es correcto. Se esperaba: #{expected_product}, pero se encontró: #{last_product}"
-    end
+Then('the last displayed product should be {string}') do |expected_product|
+    actual_product = filter_page.get_last_product_name
+    raise "Expected last product: #{expected_product}, but got: #{actual_product}" unless actual_product == expected_product
 end

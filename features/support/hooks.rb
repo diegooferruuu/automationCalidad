@@ -4,6 +4,7 @@ require_relative '../pages/checkout_page'
 require_relative '../pages/filter_page'
 require_relative '../pages/footer_page'
 require_relative '../pages/nav_menu_page'
+require_relative '../pages/product_page'
 
 
 Before do |scenario|
@@ -15,6 +16,7 @@ Before do |scenario|
   @filter_page = FilterPage.new
   @footer_page = FooterPage.new
   @nav_menu_page = NavMenu.new
+  @product_page = Product.new
 
 end
 

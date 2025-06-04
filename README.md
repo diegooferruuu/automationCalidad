@@ -28,11 +28,19 @@ Durante el proceso de testing exploratorio, se identificaron los siguientes mód
   - Frameworks recomendados: Gherkin, Cucumber, Capybara   
 
 ## Comandos de Ejecución  
-> En caso de que se incorporen pruebas automatizadas con Cucumber:
 
 ```bash
+#Ejecutar todos los features
+cucumber
+
 # Ejecutar un feature específico
 cucumber features/<nombre_del_feature>.feature
 
-# Generar un reporte en HTML
+#Ejecutar features con etiquetas como por ejemplo @smoke
+cucumber --tags @smoke
+
+# Generar un reporte en HTML de todos los features
 cucumber -f html -o report.html
+
+#Generar un reporte en HTML de los features de los smoke test
+cucumber --tags @smoke --format html --out reports/smoke_tests_report.html

@@ -7,7 +7,6 @@ Before('@cart') do
 end
 
 
-
 After do 
     Capybara.current_session.driver.quit
 end

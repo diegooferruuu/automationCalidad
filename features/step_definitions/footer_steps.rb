@@ -9,21 +9,20 @@ Given('I am logged in') do
 end
 
 When('I click the Twitter link') do
-  @footer = FooterPage.new
   @original_window = window_handle
-  @footer.click_twitter
+  @footer_page.click_twitter
 end
 
 When('I click the Facebook link') do
-  @footer = FooterPage.new
+  @footer_page = FooterPage.new
   @original_window = window_handle
-  @footer.click_facebook
+  @footer_page.click_facebook
 end
 
 When('I click the LinkedIn link') do
-  @footer = FooterPage.new
+  @footer_page = FooterPage.new
   @original_window = window_handle
-  @footer.click_linkedin
+  @footer_page.click_linkedin
 end
 
 Then('I should be redirected to the Twitter page') do

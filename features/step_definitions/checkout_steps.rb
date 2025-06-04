@@ -1,9 +1,4 @@
-require_relative '../pages/login_page'
-require_relative '../pages/cart_page'
-require_relative '../pages/checkout_page'
-
 Given('I am logged in as a standard user') do
-  @login_page = LoginPage.new
   @login_page.visit_login_page
   @login_page.enter_credentials('standard_user', 'secret_sauce')
   @login_page.click_login_button

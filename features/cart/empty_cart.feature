@@ -6,7 +6,6 @@ Feature: Empty cart
   Background:
     Given I am logged in as "standard_user" with password "secret_sauce"
     
-  @cart
   Scenario: Remove all items from the cart
     When I add the following products to the cart:
       | Sauce Labs Backpack     |

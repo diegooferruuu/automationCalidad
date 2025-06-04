@@ -3,7 +3,7 @@ Feature: Cart operations
   Background:
     Given I am logged in as "standard_user" with password "secret_sauce"
 
-  
+  @smoke
   Scenario: Add multiple products to cart
     When I add the following products to the cart:
       | Sauce Labs Backpack     |
@@ -13,7 +13,7 @@ Feature: Cart operations
       | Sauce Labs Backpack     |
       | Sauce Labs Bolt T-Shirt |
 
-
+  @smoke
   Scenario: Remove a product from the cart
     When I add the following products to the cart:
       | Sauce Labs Backpack     |
@@ -24,7 +24,7 @@ Feature: Cart operations
       | Sauce Labs Backpack     |
     And I should not see "Sauce Labs Bike Light" in the cart
 
-
+  @smoke
   Scenario: Product details in the cart are correct
     When I add "Sauce Labs Onesie" to the cart
     And I go to the cart

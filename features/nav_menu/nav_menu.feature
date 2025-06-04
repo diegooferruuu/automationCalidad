@@ -11,7 +11,7 @@ Feature: Navigation menu in Sauce Demo
     When I click the menu button
     Then I should see the close menu button
 
-
+  @smoke
   Scenario: Viewing all available menu items
     When I click the menu button
     Then I should see the following menu items:
@@ -20,6 +20,7 @@ Feature: Navigation menu in Sauce Demo
       | Logout           |
       | Reset App State  |
 
+  @smoke
   Scenario: Redirecting after clicking Logout
     When I click the menu button
     And I click the Logout button

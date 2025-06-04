@@ -3,7 +3,7 @@ Feature: Login
   As a registered user
   I want to log in successfully
 
-
+  @smoke
   Scenario Outline: Successful login with multiple users
     Given I am on the login page
     And I enter username "<username>" and password "<password>"
@@ -19,14 +19,14 @@ Feature: Login
     | error_user             | secret_sauce |
     | visual_user            | secret_sauce |
 
-  @this
+  @smoke
   Scenario: Login with locked out user
     Given I am on the login page
     And I enter username "locked_out_user" and password "secret_sauce"
     When I click the Login button
     Then I should see an error message saying "Epic sadface: Sorry, this user has been locked out."
-
-  @only
+  
+  @smoke
   Scenario: Login with incorrect credentials
     Given I am on the login page
     And I enter username "standard_user" and incorrect password "secretUser"

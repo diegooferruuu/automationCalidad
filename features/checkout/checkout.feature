@@ -4,6 +4,7 @@ Feature: Checkout process
     Given I am logged in as a standard user
     And I have added a product to the cart
 
+  @smoke
   Scenario: Complete the checkout successfully
     When I proceed to checkout
     And I enter my information:
@@ -13,6 +14,7 @@ Feature: Checkout process
     And I confirm the purchase
     Then I should see a confirmation message "Thank you for your order!"
 
+  @smoke
   Scenario: Product in overview matches added product
     When I proceed to checkout
     And I enter my information:
@@ -20,7 +22,8 @@ Feature: Checkout process
       | last_name   | Tester |
       | postal_code | 12345  |
     Then the overview should contain the product I added
-
+  
+  @smoke
   Scenario: Price in overview is correct
     When I proceed to checkout
     And I enter my information:

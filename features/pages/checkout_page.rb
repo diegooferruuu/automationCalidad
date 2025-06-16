@@ -6,35 +6,22 @@ class CheckoutPage
   end
 
   def fill_checkout_information(first_name:, last_name:, postal_code:)
-    script = <<-JS
-      function fillField(selector, value) {
-        const field = document.querySelector(selector);
-        const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
-        nativeSetter.call(field, value);
-        field.dispatchEvent(new Event('input', { bubbles: true }));
-      }
-      fillField('[data-test="firstName"]', #{first_name.to_json});
-      fillField('[data-test="lastName"]', #{last_name.to_json});
-      fillField('[data-test="postalCode"]', #{postal_code.to_json});
-    JS
-    page.execute_script(script)
-    page.execute_script("document.querySelector('[data-test=\"continue\"]').click()")
+    fill_in 'First Name', with: first_name
+    fill_in 'Last Name', with: last_name
+    fill_in 'Zip/Postal Code', with: postal_code
+    click_button('Continue')
   end
 
   def confirm_purchase
-    script = <<-JS
-      document.querySelector('button[data-test="finish"]').click();
-    JS
-    page.execute_script(script)
+    click_button('Finish')
   end
-
 
   def confirmation_message
     find('.complete-header').text
   end
 
   def product_in_overview?(product_name)
-    find('.cart_item').has_text?(product_name)
+    has_css?('.cart_item', text: product_name)
   end
 
   def item_total

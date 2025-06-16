@@ -2,7 +2,7 @@ class CartPage
   include Capybara::DSL
 
   def add_product(product_name)
-    find('div.inventory_item', text: product_name).find('button').click
+    find_inventory_item(product_name).find('button').click
   end
 
   def go_to_cart
@@ -14,20 +14,13 @@ class CartPage
   end
 
   def remove_product(product_name)
-    selector = "##{generate_remove_button_id(product_name)}"
-    puts "[INFO] Attempting to remove '#{product_name}' with selector: #{selector}"
+    selector = "##{remove_button_id(product_name)}"
+    log(:info, "Attempting to remove '#{product_name}' with selector: #{selector}")
 
-    begin
-      button = find(selector, visible: true, wait: 5)
+    with_error_handling(selector, product_name) do |button|
       scroll_to_element(button)
-      page.execute_script("arguments[0].click();", button)
-      puts "[SUCCESS] JS clicked remove button for '#{product_name}'"
-    rescue Capybara::ElementNotFound => e
-      puts "[ERROR] Could not find button with selector: #{selector}"
-      raise e
-    rescue => e
-      puts "[ERROR] Unexpected error when removing '#{product_name}' — #{e.class}: #{e.message}"
-      raise e
+      js_click(button)
+      log(:success, "JS clicked remove button for '#{product_name}'")
     end
   end
 
@@ -40,7 +33,7 @@ class CartPage
   end
 
   def get_product_details(product_name)
-    container = find('div.cart_item', text: product_name)
+    container = find_cart_item(product_name)
     {
       name:        container.find('.inventory_item_name').text,
       description: container.find('.inventory_item_desc').text,
@@ -60,7 +53,15 @@ class CartPage
 
   private
 
-  def generate_remove_button_id(name)
+  def find_inventory_item(product_name)
+    find('div.inventory_item', text: product_name)
+  end
+
+  def find_cart_item(product_name)
+    find('div.cart_item', text: product_name)
+  end
+
+  def remove_button_id(name)
     "remove-#{name.downcase.strip.gsub(/[^\w\s-]/, '').gsub(/\s+/, '-')}"
   end
 
@@ -74,10 +75,14 @@ class CartPage
   end
 
   def scroll_to_element(element)
-    script = <<~JS
-      arguments[0].scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' });
-    JS
-    page.execute_script(script, element.native)
+    page.execute_script(
+      "arguments[0].scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' });",
+      element.native
+    )
+  end
+
+  def js_click(element)
+    page.execute_script("arguments[0].click();", element)
   end
 
   def navigate_with_fallback(selector, expected_path)
@@ -86,13 +91,34 @@ class CartPage
     element.click
 
     unless wait_until_url_includes(expected_path, timeout: 5)
-      puts "[WARN] Native click failed, attempting JS click on #{selector}"
-      page.execute_script("arguments[0].click();", element)
+      log(:warn, "Native click failed, attempting JS click on #{selector}")
+      js_click(element)
       raise_navigation_error(expected_path) unless wait_until_url_includes(expected_path, timeout: 5)
     end
   end
 
   def raise_navigation_error(target)
     raise "[ERROR] Navigation to #{target} failed. Current URL: #{page.current_url}"
+  end
+
+  def with_error_handling(selector, product_name)
+    button = find(selector, visible: true, wait: 5)
+    yield(button)
+  rescue Capybara::ElementNotFound => e
+    log(:error, "Could not find button with selector: #{selector}")
+    raise e
+  rescue => e
+    log(:error, "Unexpected error when removing '#{product_name}' — #{e.class}: #{e.message}")
+    raise e
+  end
+
+  def log(level, msg)
+    prefix = {
+      info:    "[INFO]",
+      success: "[SUCCESS]",
+      warn:    "[WARN]",
+      error:   "[ERROR]"
+    }[level] || "[INFO]"
+    puts "#{prefix} #{msg}"
   end
 end

@@ -1,14 +1,15 @@
 Given('I am logged in as a standard user') do
+  @login_page = LoginPage.new
   @login_page.visit_login_page
   @login_page.enter_credentials('standard_user', 'secret_sauce')
   @login_page.click_login_button
 end
 
-Given('I have added a product to the cart') do
-  @added_product = find('div.inventory_item', match: :first)
-  @product_name = @added_product.find('.inventory_item_name').text
-  @product_price = @added_product.find('.inventory_item_price').text.gsub('$', '').to_f
-  @added_product.find('button').click
+Given('I have added the product {string} to the cart') do |product_name|
+  product = find('div.inventory_item', text: product_name)
+  @product_name = product.find('.inventory_item_name').text
+  @product_price = product.find('.inventory_item_price').text.gsub('$', '').to_f
+  product.find('button').click
   find('.shopping_cart_link').click
 end
 
@@ -34,16 +35,20 @@ Then('I should see a confirmation message {string}') do |message|
   expect(@checkout_page.confirmation_message).to eq(message)
 end
 
-Then('the overview should contain the product I added') do
-  expect(@checkout_page.product_in_overview?(@product_name)).to be true
+Then('the overview should contain the product {string}') do |product_name|
+  expect(@checkout_page.product_in_overview?(product_name)).to be true
 end
 
-Then('the item total should match the product price') do
+Then('the item total should match the price of {string}') do |product_name|
   total = @checkout_page.item_total
   expect(total).to eq(@product_price)
 end
 
-Then('the cart should be empty after purchase') do
-  find('.shopping_cart_link').click
-  expect(page).to have_no_css('.cart_item')
+Then('the tax should be correctly calculated and displayed') do
+  subtotal = @checkout_page.item_total
+  tax_text = find('.summary_tax_label').text
+  tax = tax_text.match(/Tax: \$([\d.]+)/)[1].to_f
+  
+  expected_tax = (subtotal * 0.08).round(2)
+  expect(tax).to eq(expected_tax)
 end

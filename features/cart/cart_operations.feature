@@ -1,10 +1,13 @@
 Feature: Cart operations
+  As a customer
+  I want to manage products in my shopping cart
+  so that I can review, update, and verify my selections before checkout
 
   Background:
     Given I am logged in as "standard_user" with password "secret_sauce"
 
   @smoke
-  Scenario: Add multiple products to cart
+  Scenario: Add multiple products to the cart
     When I add the following products to the cart:
       | Sauce Labs Backpack     |
       | Sauce Labs Bolt T-Shirt |
@@ -29,5 +32,5 @@ Feature: Cart operations
     When I add "Sauce Labs Onesie" to the cart
     And I go to the cart
     Then the product "Sauce Labs Onesie" should have:
-      | description                        | Rib snap infant onesie for the junior automation engineer in development. Reinforced 3-snap bottom closure, two-needle hemmed sleeved and bottom won't unravel. |
-      | price                              | $7.99 |
+      | description | Rib snap infant onesie for the junior automation engineer in development. Reinforced 3-snap bottom closure, two-needle hemmed sleeved and bottom won't unravel. |
+      | price       | $7.99 |

@@ -1,7 +1,7 @@
 Feature: Cart persistence
-  In order to not lose my selected items
   As a user
   I want the cart to preserve items when I navigate to other pages
+  so that I do not lose my selected items
 
   Background:
     Given I am logged in as "standard_user" with password "secret_sauce"

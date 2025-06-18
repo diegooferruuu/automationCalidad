@@ -34,7 +34,7 @@ Feature: Checkout process
       | last_name   | Tester |
       | postal_code | 12345  |
     Then the item total should match the price of "Sauce Labs Backpack"
-    And the tax should be correctly calculated and displayed
+    And the tax should be 0.08% of the total price
 
   Scenario: Cart is empty after purchase
     When I proceed to checkout

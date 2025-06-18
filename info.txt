@@ -1,0 +1,9 @@
+Nombres:
+    Diego Ferrufino
+    Luis Herbas
+    Camilo Padilla
+
+Links importntes:
+    github: https://github.com/diegooferruuu/automationCalidad.git
+    trello:https://trello.com/b/72kWRrN1/automatizacion
+    canva: https://www.canva.com/design/DAGpZryOSE0/6OsNHrOjitl7PDQXaibmKw/edit

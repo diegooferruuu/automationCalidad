@@ -44,7 +44,7 @@ Then('the item total should match the price of {string}') do |product_name|
   expect(total).to eq(@product_price)
 end
 
-Then('the tax should be correctly calculated and displayed') do
+Then('the tax should be 0.08% of the total price') do
   subtotal = @checkout_page.item_total
   tax_text = find('.summary_tax_label').text
   tax = tax_text.match(/Tax: \$([\d.]+)/)[1].to_f

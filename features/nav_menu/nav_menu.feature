@@ -1,5 +1,4 @@
 Feature: Navigation menu in Sauce Demo
-
   As a logged-in user
   I want to interact with the side navigation menu
   So that I can access options like logout, about, and reset app state

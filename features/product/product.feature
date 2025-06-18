@@ -1,4 +1,7 @@
 Feature: Product Cart Management
+  As a customer
+  I want to manage products in my shopping cart
+  So that I can purchase the items I want
 
   Background:
     Given I am on the product page

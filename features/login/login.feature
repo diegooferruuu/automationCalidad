@@ -1,7 +1,7 @@
 Feature: Login
-  In order to access my account and purchase products
   As a registered user
   I want to log in successfully
+  So that I can access the products page and view products
 
   @smoke
   Scenario Outline: Successful login with multiple users
